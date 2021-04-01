@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>主页 - 数据分类查错系统</title>
+    <link rel="shortcut icon" href="{% static 'favicon.ico' %}"/>
+    <link rel="bookmark" href="{% static 'favicon.ico' %}"/>
+</head>
+
+<script>
+	function confirm_to_reset(){
+		var r = confirm("确认重设所有记录吗？");
+		if (r) {
+            window.location.href = "reset";
+            confirm('请等待所有记录重设成功');
+        }
+	}
+</script>
+
+<body>
+    <center>
+
+    <header>
+        <h1>数据分类查错系统</h1>
+        {% if images_total > 0 %}
+            <p>现存 {{ images_to_be_checked }} 条数据待查错</p>
+            <p>已查错 {{ images_checked }} 条数据</p>
+        {% else %}
+            <p>请运行"重设所有记录"以获取所有待查错数据的信息</p>
+        {% endif %}
+    </header>
+    <p>
+        查错类别 / 剩余数据数量：
+        <select id="select_class">
+            <option value="0">00 突增 / {{ images_remaining.0 }}</option>
+            <option value="1">01 向上突刺 / {{ images_remaining.1 }}</option>
+            <option value="2">02 突增然后保持 / {{ images_remaining.2 }}</option>
+            <option value="3">03 凸型 / {{ images_remaining.3 }}</option>
+            <option value="4">04 密集向上突刺 / {{ images_remaining.4 }}</option>
+            <option value="5">05 缓慢上升 / {{ images_remaining.5 }}</option>
+            <option value="6">06 突降 / {{ images_remaining.6 }}</option>
+            <option value="7">07 向下突刺 / {{ images_remaining.7 }}</option>
+            <option value="8">08 突降然后保持 / {{ images_remaining.8 }}</option>
+            <option value="9">09 凹形 / {{ images_remaining.9 }}</option>
+            <option value="10">10 密集向下突刺 / {{ images_remaining.10 }}</option>
+            <option value="11">11 缓慢下降 / {{ images_remaining.11 }}</option>
+            <option value="12">12 模式渐变 / {{ images_remaining.12 }}</option>
+            <option value="13">13 剧烈波动 / {{ images_remaining.13 }}</option>
+            <option value="14">14 突增突降 / {{ images_remaining.14 }}</option>
+        </select>
+    </p>
+    <p>
+        <button onclick="var class_id = document.getElementById('select_class').selectedIndex;
+            window.open('anno?class=' + class_id)"
+            style="width: 100px; height: 40px;">开始查错</button>
+    <p>
+        <button onclick="confirm_to_reset()"
+            style="width: 100px; height: 40px;">重设所有记录</button>
+    </p>
+
+    </center>
+</body>
+</html>
